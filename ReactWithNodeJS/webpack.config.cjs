@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // 1. Require the plugin
 
 /*We are basically telling webpack to take index.js from entry. Then check for all file extensions in resolve. 
 After that apply all the rules in module.rules and produce the output and place it in main.js in the public folder.*/
@@ -9,15 +10,16 @@ module.exports={
      * to use its built-in optimizations accordingly. default is production 
      */
     mode: "development", 
+    devtool: 'inline-source-map',
     /** "entry"
      * the entry point 
      */
-    entry: "./index.js", 
+    entry: "./src/index.js", 
     output: {
         /** "path"
          * the folder path of the output file 
          */
-        path: path.resolve(__dirname, "public"),
+        path: path.resolve(__dirname, "./dist"),
         /** "filename"
          * the name of the output file 
          */
@@ -28,15 +30,22 @@ module.exports={
      * for browser (client side). Default is "web"
      */
     target: "web",
+    plugins: [
+        // 2. Add the plugin to the plugins array
+        new HtmlWebpackPlugin({
+            template: './src/index88.html', // Path to your source HTML file
+            filename: 'index.html', // Name for the generated HTML file in memory
+        }),
+    ],
     devServer: {
         /** "port" 
          * port of dev server
         */
-        port: "9500",
+        port: "8081",
         /** "static" 
          * This property tells Webpack what static file it should serve
         */
-        static: ["./public"],
+        static: ["./src"],
         /** "open" 
          * opens the browser after server is successfully started
         */
@@ -50,7 +59,10 @@ module.exports={
         /** "liveReload"
          * disable live reload on the browser. "hot" must be set to false for this to work
         */
-        liveReload: true
+        liveReload: true,
+        client: {   //Nivel del LOG
+            logging: 'info',
+        }
     },
     resolve: {
         /** "extensions" 
@@ -72,6 +84,23 @@ module.exports={
                 test: /\.(js|jsx)$/,    //kind of file extension this rule should look for and apply in test
                 exclude: /node_modules/, //folder to be excluded
                 use:  'babel-loader' //loader which we are going to use
+            },
+            // segunda Regla
+            {
+                test: /\.css$/,
+                use: [
+                {
+                    loader: 'style-loader'
+                },
+                {
+                    loader: 'css-loader',
+                    options: {
+                    modules: true,
+                    localsConvention: 'camelCase',
+                    sourceMap: true
+                    }
+                }
+                ]
             }
         ]
     }
