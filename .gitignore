@@ -1,2 +1,27 @@
 #El NodeModules del subproyecto
 /ReactWithNodeJS/node_modules
+/ReactWithNodeJS/dist
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/ReactWithExpress/node_modules
+/ReactWithExpress/.pnp
+/ReactWithExpress/.pnp.js
+
+# testing
+/ReactWithExpress/coverage
+
+# production
+/ReactWithExpress/build
+
+# misc
+/ReactWithExpress/.DS_Store
+/ReactWithExpress/.env.local
+/ReactWithExpress/.env.development.local
+/ReactWithExpress/.env.test.local
+/ReactWithExpress/.env.production.local
+
+/ReactWithExpress/npm-debug.log*
+/ReactWithExpress/yarn-debug.log*
+/ReactWithExpress/yarn-error.log*
